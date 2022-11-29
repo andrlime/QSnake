@@ -32,6 +32,7 @@ points = 0
 lose = false
 enable_keyboard_input = false
 generation = 0
+fitnesses::Vector{Int64} = []
 
 function move(snake::Vector{Position}, food::Vector{Position}, dx::Int64, dy::Int64) # updates the snake
     global points
@@ -131,6 +132,7 @@ function draw(g::Game)
             println("$generation, $points")
             global generation
             generation += 1
+            push!(fitnesses, points)
 
             # TODO: need to reset the game and output the score to a spreadsheet
             snake = [Position(20,20), Position(20,21), Position(20,22)]
@@ -162,9 +164,9 @@ function draw(g::Game)
             s, f = move(snake, food, 1, 0)
             snake = s
             food = f
-        elseif g.keyboard.Q
-            global QMap
-            print(QMap)
+        elseif g.keyboard.F
+            global fitnesses
+            print(fitnesses)
         end
 
         # implement q learning
